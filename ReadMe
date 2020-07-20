@@ -1,0 +1,56 @@
+<pre>
+This is a sample spring security project.
+
+Authentication is done via using the UserDetailsServiceImpl(read Spring framework class : UserDetailsService), can be
+done via database , but this hardcoded to foo/foo...
+
+when you use the url endpoint , it will ask for a username and password.
+
+Dependencies Required
+
+1. JWS
+2. Jaxb api = only required if you use java 9
+
+
+Class
+JWTUtil
+  -> generate token from a given user details....
+  -> extract username method : takes a token , return the username
+  -> extract expiration method : takes a toen, whether the token is expired or not...
+  -> validate token (extract username from token and compares with the username passed.
+
+--Read the SecurityConfigurer which extends -- WebSecurityConfigurerAdapter
+
+Read the JWT Util Class..
+
+It helps in 2 things.
+
+1. generate JWT Token.
+2. Extract the token and validate
+
+Step 1: A / Authenticate an endpoint
+
+-- Accepts User id and password
+-- return the JWT Response
+
+a. Create an Authentication Request in a models package.(java bean simply to put)
+b. Create an Authentication Response in a model package.
+
+JwtRequestFilter which extends OncePerRequestFilter
+
+Step 2:
+
+a. intercept all the incoming request
+b. extract jwt from header
+c. validate and set in execution context.
+
+How to test ::::
+
+Use post name and hit the http url - method : HttpMethod.POST and generate the token..
+http://127.0.0.1:8201/authenticate/
+Dont forget to use the "/" after authenticate in postman....
+
+
+
+
+</pre>
