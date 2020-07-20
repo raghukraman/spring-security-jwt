@@ -50,9 +50,9 @@ Step 1: A / Authenticate an endpoint
 a. Create an Authentication Request in a models package.(java bean simply to put)
 b. Create an Authentication Response in a model package. (java bean)
 c. create a AuthenticationController , which generated the JWT Token.
-d. The above controller should not be authenicated, which in other words don't need a user login
-as , this itself is the first step....so we need to configure this in the SecurityConfigurer
-to skip authentication...
+d. The above controller should not be authenicated, which in other words it should not go through any
+ filter, as this itself is the first step....so we need to configure this in the SecurityConfigurer
+to skip authentication...please see the configure(HttpSecurity httpSecurity) of SecurityConfigurer
 
 JwtRequestFilter which extends OncePerRequestFilter
 
