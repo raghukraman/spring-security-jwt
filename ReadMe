@@ -1,5 +1,14 @@
 <pre>
-This is a sample spring security project.
+
+<h1> Overview <h1>
+This is a sample spring security project , using java web token.
+
+Step 1 : accept a url (it should not go through authentication) and after validation of username and password, return the jWtToken
+Step 2: use the jwt token (generated from step 1) , with other request( by adding to the header) and it will
+authenticate the request.
+if step 2 token is expired or invalid or no token is provided in header, which means, that the request is
+invalid.
+
 
 Authentication is done via using the UserDetailsServiceImpl(read Spring framework class : UserDetailsService), can be
 done via database , but this hardcoded to foo/foo...
@@ -28,15 +37,31 @@ It helps in 2 things.
 1. generate JWT Token.
 2. Extract the token and validate
 
+
+<h1> Detail Steps <h1>
+
+Main Steps ::::: for the Spring Security using Java Web Token.
+
 Step 1: A / Authenticate an endpoint
 
 -- Accepts User id and password
 -- return the JWT Response
 
 a. Create an Authentication Request in a models package.(java bean simply to put)
-b. Create an Authentication Response in a model package.
+b. Create an Authentication Response in a model package. (java bean)
+c. create a AuthenticationController , which generated the JWT Token.
+d. The above controller should not be authenicated, which in other words don't need a user login
+as , this itself is the first step....so we need to configure this in the SecurityConfigurer
+to skip authentication...
 
 JwtRequestFilter which extends OncePerRequestFilter
+
+End point: http://127.0.0.1:8201/authenticate/ (use postman to test)
+Imp: Dont forget to use the "/" after authenticate in postman....
+class: AuthenticationController
+return a response with JWT.
+
+
 
 Step 2:
 
@@ -44,11 +69,18 @@ a. intercept all the incoming request
 b. extract jwt from header
 c. validate and set in execution context.
 
+Class: JwtREquestFilter
+
+use the JWT response from step 1 and add a header "Authorization" with
+"beaver abcsdfsdf" where "abcsdfsdf" is the token generated from step 1...
+
+Now if the token didn't expire and has the same user details then, it is valid
+otherwise HTTP 403 error is thrown.
+
 How to test ::::
 
 Use post name and hit the http url - method : HttpMethod.POST and generate the token..
-http://127.0.0.1:8201/authenticate/
-Dont forget to use the "/" after authenticate in postman....
+
 
 
 
